@@ -221,6 +221,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.15.0"
+<<<<<<< Updated upstream
   nested:
     dependency: transitive
     description:
@@ -229,6 +230,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+=======
+>>>>>>> Stashed changes
   path:
     dependency: transitive
     description:
@@ -410,6 +413,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.2"
+<<<<<<< Updated upstream
   typed_data:
     dependency: transitive
     description:
@@ -442,6 +446,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.16"
+=======
+>>>>>>> Stashed changes
   vector_math:
     dependency: transitive
     description:
@@ -458,6 +464,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.2.5"
+<<<<<<< Updated upstream
   web:
     dependency: transitive
     description:
@@ -482,6 +489,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.5.0"
+=======
+>>>>>>> Stashed changes
 sdks:
   dart: ">=3.5.0 <4.0.0"
   flutter: ">=3.24.0"
