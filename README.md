@@ -55,8 +55,9 @@ MongoDB >= 5.x
 Steps
 
 Clone the repository:
-
+Mobile(FE):
 git clone https://github.com/datonefeed/EventAnyWhere-FE.git
+Back-end:
 git clone https://github.com/thinhcao232/EventAnyWhere-BE.git
 cd EventAnyWhere
 
