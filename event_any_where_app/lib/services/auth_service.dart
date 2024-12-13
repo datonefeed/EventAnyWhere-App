@@ -82,6 +82,28 @@ class AuthService {
     }
   }
 
+  // Phương thức để gửi yêu cầu reset mật khẩu
+  Future<bool> resetPassword(String email) async {
+    final url = Uri.parse('$_baseUrl/reset-password');
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email}),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print('Failed to reset password: ${response.statusCode}');
+        return false;
+      }
+    } catch (error) {
+      print('Error during reset password: $error');
+      return false;
+    }
+  }
+
   // Lưu access token và refresh token vào SharedPreferences
   Future<void> saveTokens(String accessToken, String refreshToken) async {
     final prefs = await SharedPreferences.getInstance();
