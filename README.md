@@ -2,6 +2,8 @@ Event Any Where
 
 Event Any Where is a comprehensive platform for managing and participating in online and offline events. Designed to enhance user experience for both organizers and attendees, it offers intelligent features and seamless management tools.
 
+https://github.com/user-attachments/assets/0f481eb5-e652-4c00-909c-862373908b29
+
 Key Features
 
 Event Management
@@ -20,11 +22,9 @@ Interactive tools: Q&A, comments, and surveys.
 
 Smart Recommendations
 
-Personalized event suggestions based on preferences, age, search history, and surveys.
+Personalized event suggestions based on preferences, age, search history.
 
-Push Notifications
-
-Timely updates on upcoming events and livestreams via Firebase.
+Push Notifications(no realtime)
 
 Seamless Login
 
