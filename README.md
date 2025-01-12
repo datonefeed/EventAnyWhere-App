@@ -32,54 +32,114 @@ Quick login with Google/Facebook.
 
 Secure authentication via Node.js backend.
 
-Technology Stack
+System Requirements
 
-Frontend: Flutter (MVVM architecture)
+Backend
+Node.js (v14 or higher, recommended v16+)
+npm (v6 or higher, recommended v8+)
+MongoDB (local or cloud)
 
-Backend: Node.js, MongoDB
+Frontend
+Flutter SDK (v3.10 or higher)  
+Repository: EventAnywhere-FE (https://github.com/datonefeed/EventAnywhere-FE.git)
 
-Notifications: Firebase
+Admin Panel
+.NET Core SDK (v6.0 or higher)  
+Repository: AdminDashboard (https://github.com/tuanphana2/AdminDashboard.git)
 
-Machine Learning: TensorFlow Lite for smart recommendations
+Additional Tools
+ZEGOCLOUD SDK (for livestreaming)
+Git / SourceTree (optional)
+Postman (for API testing)
 
-Installation
+Installation Guide
 
-Prerequisites
+1. Clone Repositories
 
-Node.js >= 16.x
+# Backend
+git clone https://github.com/thinhcao232/EvenAnyWhere-BE.git
+cd EventAnywhere-BE
 
-Flutter >= 3.x
+# Frontend
+git clone https://github.com/datonefeed/EventAnywhere-FE.git
+cd EventAnywhere-FE
 
-MongoDB >= 5.x
+# Admin Panel
+git clone https://github.com/tuanphana2/AdminDashboard.git
+cd AdminDashboard
 
-Steps
-
-Clone the repository:
-Mobile(FE):
-git clone https://github.com/datonefeed/EventAnyWhere-FE.git
-Back-end:
-git clone https://github.com/thinhcao232/EventAnyWhere-BE.git
-cd EventAnyWhere
-
-Set up the backend:
+2. Backend Setup
 
 cd backend
 npm install
+
+Create a .env file in backend:
+
+PORT=3000
+ACCESS_TOKEN="ACCESS_TOKEN_147"
+REFRESH_TOKEN="REFRESH_TOKEN_147"
+EMAIL_USER="poroll2k3@gmail.com"
+EMAIL_PASSWORD="ckpmasdnidfcfvzg"
+GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
+FACEBOOK_APP_ID=YOUR_FACEBOOK_APP_ID
+FACEBOOK_APP_SECRET=YOUR_FACEBOOK_APP_SECRET
+MONGO_URI=YOUR_MONGO_URI
+JWT_SECRET=your_jwt_secret
+
+Run the server:
+
 npm start
 
-Set up the frontend:
+The server listens at http://localhost:3000.
 
-cd ../frontend
+3. Python-Based AI Recommendation System
+
+cd recommendation-system
+pip install pandas scikit-learn surprise shap requests flask
+python server.py
+
+The recommendation system uses port 9000.
+
+4. Frontend Setup
+
+cd EventAnywhere-FE
 flutter pub get
+
+Create a keys.dart file in the frontend directory:
+
+int appId = 176893353;
+String appSign = 'b9c65ca01ab90d48957dce35a355b2f46b8cc0b2a7b547021bfff4a1082bf6ca';
+
 flutter run
 
-Contact
+5. Admin Panel Setup
 
-Project Name: Event Any Where
+cd AdminDashboard
+dotnet restore
+dotnet run
 
-Team: C1SE42
+Admin panel runs at http://localhost:5001. Configure appsettings.json with MongoDB and JWT settings.
 
-Email: support@eaw-app.com
+ZEGOCLOUD Configuration
 
-Thank you for your interest in Event Any Where!
+Add App ID and App Secret to .env in frontend. Include in pubspec.yaml:
+
+dependencies:
+zego_uikit_prebuilt_live_streaming: ^latest_version
+
+Follow ZEGOCLOUD Docs (https://docs.zegocloud.com/).
+
+Usage
+
+1. Register as an organizer or attendee.
+2. Get personalized event recommendations.
+3. Livestream events and interact with participants.
+4. Admin panel for managing events and users.
+
+Troubleshooting
+
+- Ensure MongoDB is running.
+- Check environment variables.
+- Verify ZEGOCLOUD SDK setup.
+
 
