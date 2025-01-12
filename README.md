@@ -20,11 +20,9 @@ Interactive tools: Q&A, comments, and surveys.
 
 Smart Recommendations
 
-Personalized event suggestions based on preferences, age, search history, and surveys.
+Personalized event suggestions based on preferences, age, search history.
 
-Push Notifications
-
-Timely updates on upcoming events and livestreams via Firebase.
+Push Notifications(no realtime)
 
 Seamless Login
 
