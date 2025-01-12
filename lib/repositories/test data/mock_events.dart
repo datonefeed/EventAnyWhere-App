@@ -1,0 +1,167 @@
+final List<Map<String, dynamic>> mockEvents = [
+  {
+    "id": "1",
+    "title": "Tech Conference 2024",
+    "description": "A great event for tech enthusiasts.",
+    "location": "Da Nang, Vietnam",
+    "latitude": 16.0544,
+    "longitude": 108.2022,
+    "date": "2024-12-12",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "2",
+    "title": "AI Summit",
+    "description": "A summit about AI-driven technologies.",
+    "location": "Ho Chi Minh City, Vietnam",
+    "latitude": 10.8231,
+    "longitude": 106.6297,
+    "date": "2024-12-15",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "3",
+    "title": "Startup Meetup",
+    "description": "Networking event for startups.",
+    "location": "Hai Chau District, Da Nang",
+    "latitude": 16.0605,
+    "longitude": 108.2206,
+    "date": "2024-12-20",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "5",
+    "title": "Green Technology Fair",
+    "description": "Showcasing green tech innovations.",
+    "location": "Ngu Hanh Son District, Da Nang",
+    "latitude": 16.0356,
+    "longitude": 108.2514,
+    "date": "2024-12-28",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "6",
+    "title": "Designers Meetup",
+    "description": "For creative professionals.",
+    "location": "Hoa Vang District, Da Nang",
+    "latitude": 16.0659,
+    "longitude": 108.1395,
+    "date": "2024-12-30",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "7",
+    "title": "E-Sports Tournament",
+    "description": "Compete in top games.",
+    "location": "Hai Chau District, Da Nang",
+    "latitude": 16.0725,
+    "longitude": 108.2179,
+    "date": "2024-12-22",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "8",
+    "title": "Photography Expo",
+    "description": "Explore creative photography works.",
+    "location": "Cam Le District, Da Nang",
+    "latitude": 16.0235,
+    "longitude": 108.1998,
+    "date": "2024-12-26",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "9",
+    "title": "Fitness Bootcamp",
+    "description": "Get fit and have fun.",
+    "location": "Ngu Hanh Son District, Da Nang",
+    "latitude": 16.0380,
+    "longitude": 108.2503,
+    "date": "2024-12-18",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "10",
+    "title": "Blockchain Conference",
+    "description": "Discussing the future of blockchain.",
+    "location": "Da Nang, Vietnam",
+    "latitude": 16.0704,
+    "longitude": 108.2237,
+    "date": "2025-01-05",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "11",
+    "title": "Music Festival",
+    "description": "Enjoy live music performances.",
+    "location": "Son Tra District, Da Nang",
+    "latitude": 16.1195,
+    "longitude": 108.2520,
+    "date": "2025-01-10",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "12",
+    "title": "Art Exhibition",
+    "description": "Showcasing local art talent.",
+    "location": "Hai Chau District, Da Nang",
+    "latitude": 16.0678,
+    "longitude": 108.2202,
+    "date": "2025-01-15",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "13",
+    "title": "Cooking Workshop",
+    "description": "Learn to cook from top chefs.",
+    "location": "Cam Le District, Da Nang",
+    "latitude": 16.0239,
+    "longitude": 108.2027,
+    "date": "2025-01-20",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "14",
+    "title": "Startup Pitch Night",
+    "description": "Pitch your ideas to investors.",
+    "location": "Hoa Vang District, Da Nang",
+    "latitude": 16.0675,
+    "longitude": 108.1409,
+    "date": "2025-01-25",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "15",
+    "title": "Tech Hackathon",
+    "description": "Compete to solve tech challenges.",
+    "location": "Da Nang, Vietnam",
+    "latitude": 16.0545,
+    "longitude": 108.2100,
+    "date": "2025-01-30",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+  {
+    "id": "16",
+    "title": "Yoga Retreat",
+    "description": "Relax and rejuvenate with yoga.",
+    "location": "Son Tra District, Da Nang",
+    "latitude": 16.1199,
+    "longitude": 108.2602,
+    "date": "2025-02-05",
+    "image":
+        "https://greengarden.vn/wp-content/uploads/2023/08/backdrop-su-kien-gala-dinner-4-800x800.jpg",
+  },
+];
