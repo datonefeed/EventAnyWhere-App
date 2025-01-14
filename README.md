@@ -1,10 +1,12 @@
-Event Any Where
+# Event Any Where
 
 Event Any Where is a comprehensive platform for managing and participating in online and offline events. Designed to enhance user experience for both organizers and attendees, it offers intelligent features and seamless management tools.
 
+# Video Demo
+
 https://github.com/user-attachments/assets/0f481eb5-e652-4c00-909c-862373908b29
 
-Key Features
+# Key Features
 
 Event Management
 
