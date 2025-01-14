@@ -4,13 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:event_any_where_app/api/api_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart';
-import '';
 
 class AuthService {
   final String _baseUrl = '${ApiConstants.baseApiUrl}/accounts';
-  // final String _baseUrl = 'http://192.168.100.12:3000/accounts';
 
-  // Hàm đăng ký
   Future<bool> register(String email, String password, String fullName) async {
     final url = Uri.parse('$_baseUrl/register');
     try {
@@ -27,21 +24,15 @@ class AuthService {
           final token = data['token'];
           await saveTokens(token, '');
           return true;
-        } else {
-          print('Token not found in registration response');
-          return false;
         }
-      } else {
-        print('Registration failed: ${response.body}');
         return false;
       }
-    } catch (error) {
-      print('Error during registration: $error');
+      return false;
+    } catch (_) {
       return false;
     }
   }
 
-  // Hàm đăng nhập
   Future<Map<String, String>?> login(String email, String password) async {
     final url = Uri.parse('$_baseUrl/login');
     try {
@@ -69,30 +60,23 @@ class AuthService {
             'access_token': accessToken,
             'refresh_token': refreshToken,
           };
-        } else {
-          return Future.error(
-              'Tokens or user info not found in login response');
         }
-      } else {
-        final errorData = jsonDecode(response.body);
-        final message = errorData['message'] ?? 'An unknown error occurred';
-        return Future.error(message);
+        return Future.error('Tokens or user info not found in login response');
       }
+
+      final errorData = jsonDecode(response.body);
+      final message = errorData['message'] ?? 'An unknown error occurred';
+      return Future.error(message);
     } catch (error) {
-      print('Error during login: $error');
       return Future.error(error.toString());
     }
   }
 
-  // Phương thức để lấy thông tin hồ sơ người dùng
   Future<Map<String, dynamic>?> getUserProfile() async {
     final url = Uri.parse('$_baseUrl/info');
     final accessToken = await _getAccessToken();
 
-    if (accessToken == null) {
-      print("Access token not found");
-      return null;
-    }
+    if (accessToken == null) return null;
 
     try {
       final response = await http.get(
@@ -105,38 +89,28 @@ class AuthService {
 
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
-      } else {
-        print('Failed to load profile: ${response.statusCode}');
-        return null;
       }
-    } catch (error) {
-      print('Error loading profile: $error');
+      return null;
+    } catch (_) {
       return null;
     }
   }
 
-  // Phương thức để cập nhật hồ sơ người dùng với ảnh
   Future<bool> updateProfileWithImage(
       Map<String, String?> profileData, File? imageFile) async {
     final url = Uri.parse('$_baseUrl/updateProfile');
     final accessToken = await _getAccessToken();
     final userID = await _getUserId();
 
-    if (accessToken == null || userID == null) {
-      print("Access token or User ID not found");
-      return false;
-    }
+    if (accessToken == null || userID == null) return false;
 
-    // Thêm userID vào profileData
     profileData['_id'] = userID;
 
-    // Tạo request MultipartRequest để gửi file ảnh
     final request = http.MultipartRequest('PUT', url)
       ..headers['Authorization'] = 'Bearer $accessToken'
       ..fields
           .addAll(profileData.map((key, value) => MapEntry(key, value ?? '')));
 
-    // Nếu có ảnh, thêm ảnh vào request
     if (imageFile != null) {
       request.files
           .add(await http.MultipartFile.fromPath('image', imageFile.path));
@@ -144,29 +118,19 @@ class AuthService {
 
     try {
       final response = await request.send();
-      if (response.statusCode == 200) {
-        print('Profile updated successfully with image');
-        return true;
-      } else {
-        print('Failed to update profile: ${response.statusCode}');
-        return false;
-      }
-    } catch (error) {
-      print('Error updating profile with image: $error');
+      return response.statusCode == 200;
+    } catch (_) {
       return false;
     }
   }
 
-// Phương thức để cập nhật thông tin hồ sơ người dùng không có ảnh
   Future<bool> updateProfileWithoutImage(
       Map<String, String?> profileData) async {
     final url = Uri.parse('$_baseUrl/updateProfile');
     final accessToken = await _getAccessToken();
     final userID = await _getUserId();
-    if (accessToken == null || userID == null) {
-      print("Access token or User ID not found");
-      return false;
-    }
+
+    if (accessToken == null || userID == null) return false;
 
     profileData['_id'] = userID;
 
@@ -180,31 +144,19 @@ class AuthService {
         body: jsonEncode(profileData),
       );
 
-      if (response.statusCode == 200) {
-        print('Profile updated successfully');
-        return true;
-      } else {
-        print('Failed to update profile: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        return false;
-      }
-    } catch (error) {
-      print('Error updating profile without image: $error');
+      return response.statusCode == 200;
+    } catch (_) {
       return false;
     }
   }
 
-//phương thức thay đổi password
   Future<bool> changePassword(String currentPassword, String newPassword,
       String confirmPassword) async {
     final url = Uri.parse('$_baseUrl/changePassword');
     final accessToken = await _getAccessToken();
     final userId = await _getUserId();
 
-    if (accessToken == null || userId == null) {
-      print("Access token or User ID not found");
-      return false;
-    }
+    if (accessToken == null || userId == null) return false;
 
     final requestData = {
       '_id': userId,
@@ -223,21 +175,12 @@ class AuthService {
         body: jsonEncode(requestData),
       );
 
-      if (response.statusCode == 200) {
-        print('Password changed successfully');
-        return true;
-      } else {
-        print('Failed to change password: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        return false;
-      }
-    } catch (error) {
-      print('Error changing password: $error');
+      return response.statusCode == 200;
+    } catch (_) {
       return false;
     }
   }
 
-  // Phương thức để gửi yêu cầu reset mật khẩu
   Future<bool> resetPassword(String email) async {
     final url = Uri.parse('$_baseUrl/reset-password');
     try {
@@ -247,27 +190,17 @@ class AuthService {
         body: jsonEncode({'email': email}),
       );
 
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        print('Failed to reset password: ${response.statusCode}');
-        return false;
-      }
-    } catch (error) {
-      print('Error during reset password: $error');
+      return response.statusCode == 200;
+    } catch (_) {
       return false;
     }
   }
 
-  // Phương thức gửi yêu cầu trở thành organizer
   Future<bool> becomeOrganizer() async {
     final url = Uri.parse('$_baseUrl/organizerRole');
     final accessToken = await _getAccessToken();
 
-    if (accessToken == null) {
-      print("Access token not found");
-      return false;
-    }
+    if (accessToken == null) return false;
 
     try {
       final response = await http.patch(
@@ -278,40 +211,28 @@ class AuthService {
         },
       );
 
-      if (response.statusCode == 200) {
-        print("Successfully updated to organizer");
-        return true;
-      } else {
-        print('Failed to become organizer: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        return false;
-      }
-    } catch (error) {
-      print('Error during becoming organizer: $error');
+      return response.statusCode == 200;
+    } catch (_) {
       return false;
     }
   }
 
-  // Lấy access token từ SharedPreferences
   Future<String?> _getAccessToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('access_token');
   }
 
-  // Phương thức để lấy user_id từ SharedPreferences
   Future<String?> _getUserId() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('user_id');
   }
 
-  // Lưu access token và refresh token vào SharedPreferences
   Future<void> saveTokens(String accessToken, String refreshToken) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('access_token', accessToken);
     await prefs.setString('refresh_token', refreshToken);
   }
 
-  // Lưu thông tin người dùng vào SharedPreferences
   Future<void> saveUserInfo(Map<String, dynamic> userInfo) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('user_id', userInfo['_id']);
@@ -323,10 +244,9 @@ class AuthService {
     await prefs.setString('description', userInfo['description'] ?? '');
     await prefs.setString('address', userInfo['address'] ?? '');
     await prefs.setString('hobbies', userInfo['hobbies'] ?? '');
-    await prefs.setBool('activeSpeaker', userInfo['activeSpeaker'] ?? '');
+    await prefs.setBool('activeSpeaker', userInfo['activeSpeaker'] ?? false);
   }
 
-  // Xóa access token, refresh token và thông tin người dùng khỏi SharedPreferences
   Future<void> clearTokens() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('access_token');
