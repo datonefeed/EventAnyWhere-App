@@ -18,9 +18,10 @@ class SpeakerService {
   Future<List<dynamic>> getSpeakersBySession(String sessionId) async {
     try {
       final accessToken = await _getAccessToken();
+      final url = Uri.parse('$baseUrl/$sessionId');
 
       final response = await http.get(
-        Uri.parse('$baseUrl/$sessionId'),
+        url,
         headers: {
           'Authorization': 'Bearer $accessToken',
           'Content-Type': 'application/json',
@@ -31,27 +32,24 @@ class SpeakerService {
         final data = json.decode(response.body);
         return data['sessionSpeakers'];
       } else if (response.statusCode == 404) {
-        throw Exception("No speakers found for this session.");
-      } else if (response.statusCode == 401) {
-        throw Exception("Unauthorized access. Please check your credentials.");
+        throw Exception("No speakers found for session ID: $sessionId");
       } else {
-        throw Exception("Failed to fetch speakers. Error: ${response.body}");
+        final errorResponse = json.decode(response.body);
+        throw Exception(errorResponse['message'] ?? "Failed to fetch speakers");
       }
     } catch (error) {
-      rethrow;
+      throw Exception('Error fetching speakers: $error');
     }
   }
 
-  Future<void> addSpeaker({
-    required String sessionId,
-    required String email,
-    required String position,
-  }) async {
+  Future<void> addSpeaker(
+      String sessionId, String email, String position) async {
     try {
       final accessToken = await _getAccessToken();
+      final url = Uri.parse('$baseUrl/add');
 
       final response = await http.post(
-        Uri.parse('$baseUrl/add'),
+        url,
         headers: {
           'Authorization': 'Bearer $accessToken',
           'Content-Type': 'application/json',
@@ -63,20 +61,12 @@ class SpeakerService {
         }),
       );
 
-      if (response.statusCode == 201) {
-      } else if (response.statusCode == 400) {
+      if (response.statusCode != 201) {
         final errorResponse = json.decode(response.body);
-        throw Exception(
-          errorResponse['message'] ??
-              "Invalid request. Please check the input data.",
-        );
-      } else if (response.statusCode == 409) {
-        throw Exception("Speaker already exists in this session.");
-      } else {
-        throw Exception("Failed to add speaker. Error: ${response.body}");
+        throw Exception(errorResponse['message'] ?? "Failed to add speaker");
       }
     } catch (error) {
-      rethrow;
+      throw Exception('Error adding speaker: $error');
     }
   }
 }
