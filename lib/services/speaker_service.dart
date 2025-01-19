@@ -6,13 +6,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SpeakerService {
   final String baseUrl = "${ApiConstants.baseApiUrl}/speaker";
 
+  Future<String> _getAccessToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    if (accessToken == null) {
+      throw Exception("Access token is missing. Please log in again.");
+    }
+    return accessToken;
+  }
+
   Future<List<dynamic>> getSpeakersBySession(String sessionId) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final accessToken = prefs.getString('access_token');
-      if (accessToken == null) {
-        throw Exception("Access token is missing");
-      }
+      final accessToken = await _getAccessToken();
 
       final response = await http.get(
         Uri.parse('$baseUrl/$sessionId'),
@@ -26,24 +31,24 @@ class SpeakerService {
         final data = json.decode(response.body);
         return data['sessionSpeakers'];
       } else if (response.statusCode == 404) {
-        throw Exception("No speakers found for this session");
+        throw Exception("No speakers found for this session.");
+      } else if (response.statusCode == 401) {
+        throw Exception("Unauthorized access. Please check your credentials.");
       } else {
-        throw Exception("Failed to fetch speakers");
+        throw Exception("Failed to fetch speakers. Error: ${response.body}");
       }
     } catch (error) {
-      throw Exception('Error fetching speakers: $error');
+      rethrow;
     }
   }
 
-  // Phương pháp thêm speaker
-  Future<void> addSpeaker(
-      String sessionId, String email, String position) async {
+  Future<void> addSpeaker({
+    required String sessionId,
+    required String email,
+    required String position,
+  }) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final accessToken = prefs.getString('access_token');
-      if (accessToken == null) {
-        throw Exception("Access token is missing");
-      }
+      final accessToken = await _getAccessToken();
 
       final response = await http.post(
         Uri.parse('$baseUrl/add'),
@@ -58,12 +63,20 @@ class SpeakerService {
         }),
       );
 
-      if (response.statusCode != 201) {
+      if (response.statusCode == 201) {
+      } else if (response.statusCode == 400) {
         final errorResponse = json.decode(response.body);
-        throw Exception(errorResponse['message'] ?? "Failed to add speaker");
+        throw Exception(
+          errorResponse['message'] ??
+              "Invalid request. Please check the input data.",
+        );
+      } else if (response.statusCode == 409) {
+        throw Exception("Speaker already exists in this session.");
+      } else {
+        throw Exception("Failed to add speaker. Error: ${response.body}");
       }
     } catch (error) {
-      throw Exception('Error adding speaker: $error');
+      rethrow;
     }
   }
 }
