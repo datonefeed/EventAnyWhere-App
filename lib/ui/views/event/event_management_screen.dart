@@ -34,7 +34,6 @@ class _EventManagementScreenState extends State<EventManagementScreen> {
   String formatEventTime(String date) {
     DateTime dateTime = DateTime.parse(date);
     String formattedTime = DateFormat('hh:mm a').format(dateTime);
-
     return formattedTime;
   }
 
@@ -114,9 +113,7 @@ class _EventManagementScreenState extends State<EventManagementScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
+                      SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -187,14 +184,11 @@ class _EventManagementScreenState extends State<EventManagementScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 16),
                         ],
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   Row(
                     children: [
                       Container(
@@ -223,9 +217,7 @@ class _EventManagementScreenState extends State<EventManagementScreen> {
                                       fontSize: 22, color: Colors.white),
                                 ),
                               ),
-                              SizedBox(
-                                width: 20,
-                              ),
+                              SizedBox(width: 20),
                               Flexible(
                                   flex: 1,
                                   child: Image.asset(
@@ -234,9 +226,7 @@ class _EventManagementScreenState extends State<EventManagementScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
+                      SizedBox(width: 5),
                       Center(
                         child: PopupMenuButton<String>(
                           icon: Container(
@@ -258,7 +248,6 @@ class _EventManagementScreenState extends State<EventManagementScreen> {
                           ),
                           onSelected: (String value) async {
                             if (value == 'Delete') {
-                              // Hiển thị hộp thoại xác nhận xóa
                               final confirmDelete = await showDialog<bool>(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -308,37 +297,28 @@ class _EventManagementScreenState extends State<EventManagementScreen> {
 
                               if (confirmDelete == true) {
                                 await _viewModel.deleteEvent(event.id);
+                                final snackBar = SnackBar(
+                                  content: AwesomeSnackbarContent(
+                                    title: _viewModel.isDeleted
+                                        ? 'Success!'
+                                        : 'Failure!',
+                                    message: _viewModel.isDeleted
+                                        ? 'Event deleted successfully'
+                                        : 'Failed to delete event',
+                                    contentType: _viewModel.isDeleted
+                                        ? ContentType.success
+                                        : ContentType.failure,
+                                  ),
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                                 if (_viewModel.isDeleted) {
-                                  final snackBar = SnackBar(
-                                    content: AwesomeSnackbarContent(
-                                      title: 'Success!',
-                                      message: 'Delete event successfully',
-                                      contentType: ContentType.success,
-                                    ),
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.transparent,
-                                    elevation: 0,
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
                                   GoRouter.of(context).pop();
-                                } else {
-                                  final snackBar = SnackBar(
-                                    content: AwesomeSnackbarContent(
-                                      title: 'Failure!',
-                                      message: 'Delete event successfully',
-                                      contentType: ContentType.failure,
-                                    ),
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.transparent,
-                                    elevation: 0,
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
                                 }
                               }
-                            } else {
-                              print('Selected option: $value');
                             }
                           },
                           color: const Color.fromARGB(255, 11, 11, 19),
@@ -375,107 +355,6 @@ class _EventManagementScreenState extends State<EventManagementScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            context.push('/updateEvent', extra: event);
-                          },
-                          child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 12),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: MyTheme.primaryColor, width: 2),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                children: [
-                                  Image.asset('assets/icons/ic_edit_event.png'),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    'Update Event',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: MyTheme.primaryColor,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        Spacer(),
-                        InkWell(
-                          onTap: () {
-                            GoRouter.of(context)
-                                .push('/sessionList/${event.id}');
-                          },
-                          child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 12),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: MyTheme.primaryColor, width: 2),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                      'assets/icons/ic_edit_session.png'),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    'Session List',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: MyTheme.primaryColor,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: InkWell(
-                      onTap: () {
-                        //vao edit Speaker
-                      },
-                      child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 12),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: MyTheme.grey, width: 2),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            children: [
-                              Image.asset('assets/icons/ic_edit_speaker.png'),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                '   Task List   ',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: MyTheme.grey,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          )),
-                    ),
-                  )
                 ],
               ),
             ),
@@ -484,31 +363,4 @@ class _EventManagementScreenState extends State<EventManagementScreen> {
       ),
     );
   }
-}
-
-// Hàm hiển thị hộp thoại xác nhận xóa
-Future<bool?> _showDeleteConfirmationDialog(BuildContext context) {
-  return showDialog<bool>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this event?'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false); // Người dùng chọn "Không"
-            },
-            child: Text('No'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true); // Người dùng chọn "Có"
-            },
-            child: Text('Yes'),
-          ),
-        ],
-      );
-    },
-  );
 }
