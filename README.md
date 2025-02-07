@@ -6,6 +6,12 @@ Event Any Where is a comprehensive platform for managing and participating in on
 
 https://github.com/user-attachments/assets/0f481eb5-e652-4c00-909c-862373908b29
 
+# UX/UI Design
+
+![image](https://github.com/user-attachments/assets/18c64d91-a691-4c01-80f6-41068006c97f)
+
+link figma: https://www.figma.com/design/P2LKL66XWctofT5v4Xog0l/Event-AnyWhere?node-id=0-1&t=3otMM7LQq96i3FgM-1
+
 # Key Features
 
 Event Management
