@@ -1,3 +1,11 @@
+# Team member
+
+- Dat Pham Thanh - Leader
+- Thinh Cao Van - Member
+- Nam Ho Phuoc Viet - Member
+- Nhu Nguyen Van - Member
+- Tuan Phan Quang - Member
+
 # Event Any Where
 
 Event Any Where is a comprehensive platform for managing and participating in online and offline events. Designed to enhance user experience for both organizers and attendees, it offers intelligent features and seamless management tools.
